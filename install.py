@@ -1,5 +1,7 @@
 from installer.PywikibotInstaller import PywikibotInstaller
 from configurator.PywikibotConfigurator import PywikibotConfigurator
+from configurator.EnvironmentConfigurator import EnvironmentConfigurator
+import os.path
 
 def yesNoQuestion(question):
     question += ' Y/N: '
@@ -27,3 +29,15 @@ else:
         print 'Configuration failed. Aborting...'
         exit(1)
 
+# CUSTOM SCRIPTS CONFIGURATION
+custom_dir = os.path.dirname(os.path.realpath(__file__))
+custom_configurator = EnvironmentConfigurator(pywikibot_dir, custom_dir)
+if custom_configurator.is_configured():
+    print 'Environment is configured'
+else:
+    print 'Configuring Environment...'
+    custom_configurator.configure()
+    if not custom_configurator.is_configured():
+        print 'Configuration failed. Aborting...'
+        exit(1)
+print 'Installer finished successfully!'
