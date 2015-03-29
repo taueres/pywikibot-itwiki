@@ -1,4 +1,4 @@
 *.pyc
-/data
 Environment.sh
 .idea
+database/DbSettings.py

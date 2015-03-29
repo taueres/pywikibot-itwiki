@@ -1,6 +1,7 @@
 from installer.PywikibotInstaller import PywikibotInstaller
 from configurator.PywikibotConfigurator import PywikibotConfigurator
 from configurator.EnvironmentConfigurator import EnvironmentConfigurator
+from configurator.DatabaseConfigurator import DatabaseConfigurator
 import os.path
 
 def yesNoQuestion(question):
@@ -17,27 +18,20 @@ else:
         print 'Error installing pywikibot. Aborting...'
         exit(1)
     pywikibot_dir = installer.get_install_path()
-
-# PYWIKIBOT CONFIGURATION
-configurator = PywikibotConfigurator(pywikibot_dir)
-if configurator.is_configured():
-    print 'Pywikibot is configured'
-else:
-    print 'Configuring Pywikibot...'
-    configurator.configure()
-    if not configurator.is_configured():
-        print 'Configuration failed. Aborting...'
-        exit(1)
-
-# CUSTOM SCRIPTS CONFIGURATION
 custom_dir = os.path.dirname(os.path.realpath(__file__))
-custom_configurator = EnvironmentConfigurator(pywikibot_dir, custom_dir)
-if custom_configurator.is_configured():
-    print 'Environment is configured'
-else:
-    print 'Configuring Environment...'
-    custom_configurator.configure()
-    if not custom_configurator.is_configured():
-        print 'Configuration failed. Aborting...'
-        exit(1)
+configurators = [
+    PywikibotConfigurator(pywikibot_dir),
+    EnvironmentConfigurator(pywikibot_dir, custom_dir),
+    DatabaseConfigurator(custom_dir)
+]
+for configurator in configurators:
+    if configurator.is_configured():
+        print configurator.get_name() + ' is configured'
+    else:
+        print 'Configuring ' + configurator.get_name() + '...'
+        configurator.configure()
+        if not configurator.is_configured():
+            print 'Configuration failed. Aborting...'
+            exit(1)
+# TODO: apply default schema to database
 print 'Installer finished successfully!'

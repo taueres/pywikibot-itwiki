@@ -38,3 +38,6 @@ class PywikibotConfigurator(object):
         os.chmod(destination_file, stat.S_IREAD)
 
         return destination_file
+
+    def get_name(self):
+        return 'Pywikibot'
