@@ -4,7 +4,7 @@ import simplejson as json
 import urllib2, os, sys, time
 import pywikibot, re
 from pprint import pprint
-from settings import LIMIT_TEMPLATE_CHECK
+from settings import LIMIT_TEMPLATE_CHECK, savePage
 
 # Constants
 SUMMARY = "[[WP:Bot|Bot]]: Fix portali in ordine alfabetico"
@@ -52,7 +52,7 @@ def getPageText( pageTitle ):
 
 def putPageText( pageTitle, text ):
 	wikiPage = pywikibot.Page( wikiSite, pageTitle )
-	wikiPage.put( text, SUMMARY )
+	savePage(wikiPage, text, SUMMARY)
 
 def getPortalArguments( portalTemplate ):
 	output = portalTemplate.split( '|' )
@@ -130,7 +130,7 @@ def saveErrorLog( errorPages, wikiPageTitle ):
 		elif error == 'multiple' :
 			errorMsg = u'ha più di un template'
 		output += u"* [[" + title + u"]] " + errorMsg + u"\n"
-	wikiPage.put( output, u"[[WP:Bot|Bot]]: Registrazione log" )
+	savePage(wikiPage, output, u"[[WP:Bot|Bot]]: Registrazione log")
 
 ############### STARTING POINT FOR THE SCRIPT ################
 print "---- Esecuzione del " + time.strftime("%c") + " ----"

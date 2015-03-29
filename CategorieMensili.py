@@ -11,7 +11,7 @@
 #   Per maggiori informazioni vedere la licenza completa su:
 #   http://www.gnu.org/licenses/
 
-import sys, re, time
+import sys, time
 import pywikibot
 from settings import DEBUG_MODE, savePage, TESTO_DINAMICO, NOMI_MESI
 
@@ -24,41 +24,42 @@ day = time.localtime().tm_mday
 month = time.localtime().tm_mon
 intYear = time.localtime().tm_year
 
-intYear = intYear+1 if month==12 else intYear
+intYear = intYear + 1 if month == 12 else intYear
 month = month % 12 + 1
 
 year = str(intYear)
 
 strMonth = str(month)
-strMonth = '0'+strMonth if len(strMonth)==1 else strMonth
-	
+strMonth = '0' + strMonth if len(strMonth) == 1 else strMonth
+
 if not (day in range(27, 32)) and not DEBUG_MODE:
-  print u'Lasso di tempo non valido per l\'esecuzione. Giorno rilevato: '+str(day)
+  print u'Lasso di tempo non valido per l\'esecuzione. Giorno rilevato: ' + str(day)
   sys.exit( 1 )
 
 Oggetto="[[WP:Bot|Bot]]: Creazione categoria mensile"
 
 monthName = NOMI_MESI[strMonth]
 Elenco=[
-u"Categoria:Aiutare - "+monthName+" "+year,
-u"Categoria:Controllare - "+monthName+" "+year,
-u"Categoria:Controllare copyright - "+monthName+" "+year,
-u"Categoria:Verificare enciclopedicità - "+monthName+" "+year,
-u"Categoria:Senza fonti - "+monthName+" "+year,
-u"Categoria:Contestualizzare fonti - "+monthName+" "+year,
-u"Categoria:Localismo - "+monthName+" "+year,
-u"Categoria:Pagine orfane - "+monthName+" "+year,
-u"Categoria:Voci non neutrali - "+monthName+" "+year,
-u"Categoria:Tradurre - "+monthName+" "+year,
-u"Categoria:Unire - "+monthName+" "+year,
-u"Categoria:Wikificare - "+monthName+" "+year,
-u"Categoria:Correggere - "+monthName+" "+year,
-u"Categoria:Lavoro sporco - "+monthName+" "+year,
-u"Categoria:Voci monitorate - "+monthName+" "+year,
-u"Categoria:Voci entrate in vetrina nel mese di "+monthName+" "+year,
-u"Categoria:Voci di qualità valutate nel mese di "+monthName+" "+year
+    u"Categoria:Aiutare - " + monthName + " " + year,
+    u"Categoria:Controllare - "+ monthName + " " + year,
+    u"Categoria:Controllare copyright - " + monthName + " " + year,
+    u"Categoria:Verificare enciclopedicità - " + monthName + " " + year,
+    u"Categoria:Senza fonti - " + monthName + " " + year,
+    u"Categoria:Contestualizzare fonti - " + monthName + " " + year,
+    u"Categoria:Localismo - " + monthName + " " + year,
+    u"Categoria:Pagine orfane - " + monthName + " " + year,
+    u"Categoria:Voci non neutrali - " + monthName + " " + year,
+    u"Categoria:Tradurre - " + monthName + " " + year,
+    u"Categoria:Unire - " + monthName + " " + year,
+    u"Categoria:Wikificare - " + monthName + " " + year,
+    u"Categoria:Correggere - " + monthName + " " + year,
+    u"Categoria:Lavoro sporco - " + monthName + " " + year,
+    u"Categoria:Voci monitorate - " + monthName + " " + year,
+    u"Categoria:Voci entrate in vetrina nel mese di " + monthName + " " + year,
+    u"Categoria:Voci di qualità valutate nel mese di " + monthName + " " + year
 ]
 
+print 'Esecuzione script creazione categorie mensili'
 wikiSite = pywikibot.getSite()
 ##CREAZIONE DELLE CATEGORIE MENSILI
 for i in range(13):
