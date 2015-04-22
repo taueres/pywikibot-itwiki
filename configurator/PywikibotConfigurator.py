@@ -17,8 +17,8 @@ class PywikibotConfigurator(object):
         pywb_module.base_dir = self._pywikibot_dir
         pywb_module.create_user_config()
 
-        username = raw_input('Pywikibot username: ')
-        password = raw_input('Pywikibot password: ')
+        username = input('Pywikibot username: ')
+        password = input('Pywikibot password: ')
         saved_file = self._save_username_and_password(username, password)
 
         config_file = self._get_config_file_name()

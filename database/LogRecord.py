@@ -1,6 +1,6 @@
 import mysql.connector
 import datetime
-import DbSettings
+from . import DbSettings
 
 class LogRecord(object):
     def __init__(self):

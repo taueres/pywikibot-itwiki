@@ -1,4 +1,4 @@
-from BaseCommand import BaseCommand
+from .BaseCommand import BaseCommand
 
 class GitCloneCommand(BaseCommand):
     def __init__(self, repository_uri, directory):

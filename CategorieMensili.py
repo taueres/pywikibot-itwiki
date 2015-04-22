@@ -33,77 +33,77 @@ strMonth = str(month)
 strMonth = '0' + strMonth if len(strMonth) == 1 else strMonth
 
 if not (day in range(27, 32)) and not DEBUG_MODE:
-  print u'Lasso di tempo non valido per l\'esecuzione. Giorno rilevato: ' + str(day)
+  print('Lasso di tempo non valido per l\'esecuzione. Giorno rilevato: ' + str(day))
   sys.exit( 1 )
 
 Oggetto="[[WP:Bot|Bot]]: Creazione categoria mensile"
 
 monthName = NOMI_MESI[strMonth]
 Elenco=[
-    u"Categoria:Aiutare - " + monthName + " " + year,
-    u"Categoria:Controllare - "+ monthName + " " + year,
-    u"Categoria:Controllare copyright - " + monthName + " " + year,
-    u"Categoria:Verificare enciclopedicità - " + monthName + " " + year,
-    u"Categoria:Senza fonti - " + monthName + " " + year,
-    u"Categoria:Contestualizzare fonti - " + monthName + " " + year,
-    u"Categoria:Localismo - " + monthName + " " + year,
-    u"Categoria:Pagine orfane - " + monthName + " " + year,
-    u"Categoria:Voci non neutrali - " + monthName + " " + year,
-    u"Categoria:Tradurre - " + monthName + " " + year,
-    u"Categoria:Unire - " + monthName + " " + year,
-    u"Categoria:Wikificare - " + monthName + " " + year,
-    u"Categoria:Correggere - " + monthName + " " + year,
-    u"Categoria:Lavoro sporco - " + monthName + " " + year,
-    u"Categoria:Voci monitorate - " + monthName + " " + year,
-    u"Categoria:Voci entrate in vetrina nel mese di " + monthName + " " + year,
-    u"Categoria:Voci di qualità valutate nel mese di " + monthName + " " + year
+    "Categoria:Aiutare - " + monthName + " " + year,
+    "Categoria:Controllare - "+ monthName + " " + year,
+    "Categoria:Controllare copyright - " + monthName + " " + year,
+    "Categoria:Verificare enciclopedicità - " + monthName + " " + year,
+    "Categoria:Senza fonti - " + monthName + " " + year,
+    "Categoria:Contestualizzare fonti - " + monthName + " " + year,
+    "Categoria:Localismo - " + monthName + " " + year,
+    "Categoria:Pagine orfane - " + monthName + " " + year,
+    "Categoria:Voci non neutrali - " + monthName + " " + year,
+    "Categoria:Tradurre - " + monthName + " " + year,
+    "Categoria:Unire - " + monthName + " " + year,
+    "Categoria:Wikificare - " + monthName + " " + year,
+    "Categoria:Correggere - " + monthName + " " + year,
+    "Categoria:Lavoro sporco - " + monthName + " " + year,
+    "Categoria:Voci monitorate - " + monthName + " " + year,
+    "Categoria:Voci entrate in vetrina nel mese di " + monthName + " " + year,
+    "Categoria:Voci di qualità valutate nel mese di " + monthName + " " + year
 ]
 
-print 'Esecuzione script creazione categorie mensili'
+print('Esecuzione script creazione categorie mensili')
 wikiSite = pywikibot.getSite()
 ##CREAZIONE DELLE CATEGORIE MENSILI
 for i in range(13):
   pagina = pywikibot.Page(wikiSite, Elenco[i])
   if not pagina.exists():
-    Testo=u"""__HIDDENCAT__
-{{categoria lavoro|"""+TESTO_DINAMICO[i][0]+"|data="+monthName+" "+year+u"""}}
+    Testo="""__HIDDENCAT__
+{{categoria lavoro|"""+TESTO_DINAMICO[i][0]+"|data="+monthName+" "+year+"""}}
 {{Indice categoria}}\n
-[[Categoria:"""+TESTO_DINAMICO[i][1]+u"| "+year+" "+strMonth+u"""]]
-[[Categoria:Lavoro sporco - """+monthName+" "+year+u"|"+TESTO_DINAMICO[i][2]+"]]"
+[[Categoria:"""+TESTO_DINAMICO[i][1]+"| "+year+" "+strMonth+"""]]
+[[Categoria:Lavoro sporco - """+monthName+" "+year+"|"+TESTO_DINAMICO[i][2]+"]]"
     savePage(pagina, Testo, Oggetto)
   else:
-    print u"Pagina ".encode('utf-8') + Elenco[i].encode('utf-8') + u" già esistente.".encode('utf-8')
+    print("Pagina " + Elenco[i] + " già esistente.")
 
 ##CREAZIONE DELLA CATEGORIA RIEPILOGATIVA MENSILE
 pagina = pywikibot.Page(wikiSite, Elenco[13])
 if not pagina.exists():
-  Testo=u"Questa categoria serve per coordinare il [[Aiuto:Lavoro sporco|lavoro sporco]] nel mese di "+monthName+" "+year+u""".\n
-[[Categoria:Lavoro sporco per mese| """+year+" "+strMonth+u"]]"
+  Testo="Questa categoria serve per coordinare il [[Aiuto:Lavoro sporco|lavoro sporco]] nel mese di "+monthName+" "+year+""".\n
+[[Categoria:Lavoro sporco per mese| """+year+" "+strMonth+"]]"
   savePage(pagina, Testo, Oggetto)
 else:
-  print u'Pagina di riepilogo già esistente.'.encode('utf-8')
+  print('Pagina di riepilogo già esistente.')
 ##CREAZIONE DELLA CATEGORIA PER LE VOCI MONITORATE
 pagina = pywikibot.Page(wikiSite, Elenco[14])
 if not pagina.exists():
-  Testo=u"[[Categoria:Voci monitorate per mese| "+year+" "+strMonth+u"]]"
+  Testo="[[Categoria:Voci monitorate per mese| "+year+" "+strMonth+"]]"
   savePage(pagina, Testo, Oggetto)
 else:
-  print u'Pagina per le voci monitorate già esistente.'.encode('utf-8')
+  print('Pagina per le voci monitorate già esistente.')
 ##CREAZIONE DELLA CATEGORIA PER LA VETRINA
 pagina = pywikibot.Page(wikiSite, Elenco[15])
 if not pagina.exists():
-  Testo=u"Questa categoria comprende le voci entrate in vetrina nel corso del mese di "+monthName+" "+year+""".
+  Testo="Questa categoria comprende le voci entrate in vetrina nel corso del mese di "+monthName+" "+year+""".
 __HIDDENCAT__\n
-[[Categoria:Voci in vetrina per mese| """+year+" "+strMonth+u"]]"
+[[Categoria:Voci in vetrina per mese| """+year+" "+strMonth+"]]"
   savePage(pagina, Testo, Oggetto)
 else:
-  print u'Pagina per la vetrina già esistente.'.encode('utf-8')
+  print('Pagina per la vetrina già esistente.')
 ##CREAZIONE DELLA CATEGORIA PER LE VOCI DI QUALITÀ
 pagina = pywikibot.Page(wikiSite, Elenco[16])
 if not pagina.exists():
-  Testo=u"Questa categoria comprende le voci riconosciute di qualità nel corso del mese di "+monthName+" "+year+u""".
+  Testo="Questa categoria comprende le voci riconosciute di qualità nel corso del mese di "+monthName+" "+year+""".
 __HIDDENCAT__\n
-[[Categoria:Voci di qualità per mese| """+year+" "+strMonth+u"]]"
+[[Categoria:Voci di qualità per mese| """+year+" "+strMonth+"]]"
   savePage(pagina, Testo, Oggetto)
 else:
-  print u'Pagina per le voci di qualità già esistente.'.encode('utf-8')
+  print('Pagina per le voci di qualità già esistente.')

@@ -1,6 +1,6 @@
-from shellCommands.MakeDirectoryCommand import MakeDirectoryCommand
-from shellCommands.GitCloneCommand import GitCloneCommand
-from shellCommands.CommandContext import CommandContext
+from .shellCommands.MakeDirectoryCommand import MakeDirectoryCommand
+from .shellCommands.GitCloneCommand import GitCloneCommand
+from .shellCommands.CommandContext import CommandContext
 
 PYWIKIBOT_REPOSITORY_URI = 'https://github.com/wikimedia/pywikibot-core.git'
 
@@ -11,24 +11,24 @@ class PywikibotInstaller(object):
 
     def install(self):
         default_dir = self._get_recommended_dir()
-        print 'Where should I install pywikibot? [' + default_dir + ']'
-        directory = raw_input()
+        print('Where should I install pywikibot? [' + default_dir + ']')
+        directory = input()
         if not directory:
-            print 'Using default directory...'
+            print('Using default directory...')
             directory = default_dir
 
-        print 'Creating directory...'
+        print('Creating directory...')
         make_directory = MakeDirectoryCommand(directory)
         if not self._execute_command(make_directory):
             return False
 
-        print 'Downloading pywikibot...'
+        print('Downloading pywikibot...')
         git_clone = GitCloneCommand(PYWIKIBOT_REPOSITORY_URI, directory)
         if not self._execute_command(git_clone):
             return False
 
         self._install_directory = directory
-        print 'Pywikibot installed correctly!'
+        print('Pywikibot installed correctly!')
         return True
 
     def _get_recommended_dir(self):

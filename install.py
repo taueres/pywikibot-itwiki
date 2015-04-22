@@ -6,16 +6,16 @@ import os.path
 
 def yesNoQuestion(question):
     question += ' Y/N: '
-    return raw_input(question) in ['y', 'yes', 'Y', 'YES']
+    return input(question) in ['y', 'yes', 'Y', 'YES']
 
 # PYWIKIBOT INSTALL
 pywikibot_installed = yesNoQuestion("Pywikibot is already installed?")
 if pywikibot_installed:
-    pywikibot_dir = raw_input("Directory of pywikibot: ")
+    pywikibot_dir = input("Directory of pywikibot: ")
 else:
     installer = PywikibotInstaller()
     if not installer.install():
-        print 'Error installing pywikibot. Aborting...'
+        print('Error installing pywikibot. Aborting...')
         exit(1)
     pywikibot_dir = installer.get_install_path()
 custom_dir = os.path.dirname(os.path.realpath(__file__))
@@ -26,12 +26,12 @@ configurators = [
 ]
 for configurator in configurators:
     if configurator.is_configured():
-        print configurator.get_name() + ' is configured'
+        print(configurator.get_name() + ' is configured')
     else:
-        print 'Configuring ' + configurator.get_name() + '...'
+        print('Configuring ' + configurator.get_name() + '...')
         configurator.configure()
         if not configurator.is_configured():
-            print 'Configuration failed. Aborting...'
+            print('Configuration failed. Aborting...')
             exit(1)
 # TODO: apply default schema to database
-print 'Installer finished successfully!'
+print('Installer finished successfully!')

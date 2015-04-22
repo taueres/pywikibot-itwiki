@@ -1,7 +1,7 @@
 #coding: UTF-8
 
 import simplejson as json
-import urllib2, os, sys, time
+import urllib.request, urllib.error, urllib.parse, os, sys, time
 import pywikibot, re
 from pprint import pprint
 from settings import LIMIT_TEMPLATE_CHECK, savePage
@@ -31,7 +31,7 @@ alreadySorted = 0
 
 # Functions
 def getJsonFromURL( url ):
-	response = urllib2.urlopen( url )
+	response = urllib.request.urlopen( url )
 	text = response.read()
 	jsonData = json.loads( text )
 	return jsonData
@@ -117,27 +117,27 @@ def saveErrorLog( errorPages, wikiPageTitle ):
 	if wikiPage.exists() :
 		output = wikiPage.get()
 	else :
-		output = u"In questa pagina vengono elencate le voci che hanno errori nell'utilizzo del Template:Portale\n\n"
-	output += u"\n=== {{subst:LOCALDAY}} {{subst:LOCALMONTHNAME}} {{subst:LOCALYEAR}} ===\n"
+		output = "In questa pagina vengono elencate le voci che hanno errori nell'utilizzo del Template:Portale\n\n"
+	output += "\n=== {{subst:LOCALDAY}} {{subst:LOCALMONTHNAME}} {{subst:LOCALYEAR}} ===\n"
 	for elem in errorPages :
 		# Valori per error: redirect, notfound, multiple
 		title = elem[0]
 		error = elem[1]
 		if error == 'redirect' :
-			errorMsg = u'è un redirect'
+			errorMsg = 'è un redirect'
 		elif error == 'notfound' :
-			errorMsg = u'non ha il template'
+			errorMsg = 'non ha il template'
 		elif error == 'multiple' :
-			errorMsg = u'ha più di un template'
-		output += u"* [[" + title + u"]] " + errorMsg + u"\n"
-	savePage(wikiPage, output, u"[[WP:Bot|Bot]]: Registrazione log")
+			errorMsg = 'ha più di un template'
+		output += "* [[" + title + "]] " + errorMsg + "\n"
+	savePage(wikiPage, output, "[[WP:Bot|Bot]]: Registrazione log")
 
 ############### STARTING POINT FOR THE SCRIPT ################
-print "---- Esecuzione del " + time.strftime("%c") + " ----"
+print("---- Esecuzione del " + time.strftime("%c") + " ----")
 
 savedContinueFileName = os.environ['SAVED_CONTINUE_FILE']
 if not savedContinueFileName :
-	print "Environment variable SAVED_CONTINUE_FILE not set. Quitting."
+	print("Environment variable SAVED_CONTINUE_FILE not set. Quitting.")
 	sys.exit( 1 )
 
 # Load 'continue string' if it is saved
@@ -158,14 +158,14 @@ while( continueFetching and examinedPages < LIMIT_TEMPLATE_CHECK ):
 	numRequests += 1
 	
 	if not 'query' in jsonData :
-		print 'Error detected while parsing XML. Showing erroneus data and quitting.'
+		print('Error detected while parsing XML. Showing erroneus data and quitting.')
 		pprint( jsonData )
 		sys.exit( 1 )
 	# Fetch new continue token, used for next iteration (or being saved)
 	if 'query-continue' in jsonData :
 		continueStr = jsonData['query-continue']['embeddedin']['eicontinue']
 	else :
-		print 'Query-continue parameter not received. Processing last pages.'
+		print('Query-continue parameter not received. Processing last pages.')
 		continueFetching = False
 
 	pageList = getListPage( jsonData['query']['embeddedin'] )
@@ -173,15 +173,15 @@ while( continueFetching and examinedPages < LIMIT_TEMPLATE_CHECK ):
 	# Check how many pages we have received
 	numPages = len( pageList )
 	if continueFetching and numPages != LIMIT_PAGES :
-		print ( "Requested " + str( LIMIT_PAGES ) + " pages but " + str( numPages ) + " given. "
-			+ "Quitting after next iteration." )
+		print(( "Requested " + str( LIMIT_PAGES ) + " pages but " + str( numPages ) + " given. "
+			+ "Quitting after next iteration." ))
 		continueFetching = False
 	
 	# Show info every 5 requests
 	if numRequests % 5 == 0 :
-		print ( str( examinedPages ) + " cont:" + continueStr +
+		print(( str( examinedPages ) + " cont:" + continueStr +
 			" error:" + str( error ) + " noSort:" + str( noSortingNeeded ) +
-			" alrdSort:" + str( alreadySorted ) + " nextPage:" + pageList[0].encode('utf-8') ) 
+			" alrdSort:" + str( alreadySorted ) + " nextPage:" + pageList[0] )) 
 		sys.stdout.flush()
 	
 	for page in pageList:
@@ -190,15 +190,15 @@ while( continueFetching and examinedPages < LIMIT_TEMPLATE_CHECK ):
 
 		text = getPageText( page )
 		if not text:
-			print ( "Skipping page '" + page.encode('utf-8') +
-				"'. It's redirect or some error occured." )
+			print(( "Skipping page '" + page +
+				"'. It's redirect or some error occured." ))
 			errorList.append( [ page, 'redirect' ] )
 			error += 1
 			continue
 
 		result = REGEX_COMPILED.search( text )
 		if not result :
-			print "Skipping page '" + page.encode('utf-8') + "'. Template not found."
+			print("Skipping page '" + page + "'. Template not found.")
 			errorList.append( [ page, 'notfound' ] )
 			error += 1
 			continue
@@ -214,21 +214,21 @@ while( continueFetching and examinedPages < LIMIT_TEMPLATE_CHECK ):
 			multilineRegex = REGEX + ( r'[ \n]*' + REGEX ) * ( len( matchesList ) - 1 )
 			multilineMatches = re.findall( multilineRegex, text )
 			if len( arguments ) in [5, 6] and len ( multilineMatches ) == 1 :
-				print "Skipping page '" + page.encode('utf-8') + "'. Multitemplate used correctly."
+				print("Skipping page '" + page + "'. Multitemplate used correctly.")
 			else :
-				print "Skipping page '" + page.encode('utf-8') + "'. Multitemplate not used correctly."
+				print("Skipping page '" + page + "'. Multitemplate not used correctly.")
 				errorList.append( [ page, 'multiple' ] )
 				error += 1
 			continue
 		if not arguments:
-			print "Some unexpected fatal error occured. Page: " + page.encode('utf-8')
+			print("Some unexpected fatal error occured. Page: " + page)
 			sys.exit( 1 )
 		forced = editForced( templateStr )
 		if not forced and len( arguments ) == 1 :
 			# Nothing to sort
 			noSortingNeeded += 1
 			continue
-		argumentsSorted = sorted( arguments, key = unicode.lower )
+		argumentsSorted = sorted( arguments, key = str.lower )
 		if not forced and argumentsSorted == arguments :
 			# Already sorted
 			alreadySorted += 1
@@ -238,21 +238,21 @@ while( continueFetching and examinedPages < LIMIT_TEMPLATE_CHECK ):
 		# Replace template with new one
 		newTemplate = generatePortal( argumentsSorted )
 		newText = REGEX_COMPILED.sub( newTemplate, text )
-		print "Fixing '" + page.encode('utf-8') + "'"
+		print("Fixing '" + page + "'")
 		sys.stdout.flush()
 		putPageText( page, newText )
 
 # Print last status before quitting
-print ( str( examinedPages ) + " cont:" + continueStr +
+print(( str( examinedPages ) + " cont:" + continueStr +
 	" error:" + str( error ) + " noSort:" + str( noSortingNeeded ) +
-	" alrdSort:" + str( alreadySorted ) )
+	" alrdSort:" + str( alreadySorted ) ))
 
 # Save 'continue string' to file
-print u"Saving continue string..."
+print("Saving continue string...")
 savedContinueFile = open( savedContinueFileName, 'w' )
 savedContinueFile.write( continueStr )
 
-print u"Saving error log into " + ERROR_LOG_PAGE.encode('utf-8') + u"..."
+print("Saving error log into " + ERROR_LOG_PAGE + "...")
 saveErrorLog( errorList, ERROR_LOG_PAGE )
 
-print "---- Esecuzione terminata: " + time.strftime("%c") + " ----\n"
+print("---- Esecuzione terminata: " + time.strftime("%c") + " ----\n")

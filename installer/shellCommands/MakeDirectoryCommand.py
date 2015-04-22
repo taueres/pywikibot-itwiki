@@ -1,4 +1,4 @@
-from BaseCommand import BaseCommand
+from .BaseCommand import BaseCommand
 
 class MakeDirectoryCommand(BaseCommand):
     def __init__(self, directory):

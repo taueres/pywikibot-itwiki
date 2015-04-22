@@ -61,4 +61,4 @@ output += "}}<noinclude>[[Categoria:Template pagina principale|Lingue]]</noinclu
 
 wikiPage = pywikibot.Page(wikiSite, "Template:Pagina principale/Lingue")
 savePage(wikiPage, output, "[[WP:BOT|Bot]]: Aggiornamento")
-print '---- Esecuzione terminata ----\n'
+print('---- Esecuzione terminata ----\n')

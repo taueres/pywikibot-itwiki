@@ -10,10 +10,10 @@ class DatabaseConfigurator(object):
         )
 
     def configure(self):
-        username = raw_input('Username for mysql database: ')
-        password = raw_input('Password for mysql database: ')
-        database = raw_input('Database name for mysql: ')
-        host = raw_input('Host for mysql: [127.0.0.1] ')
+        username = input('Username for mysql database: ')
+        password = input('Password for mysql database: ')
+        database = input('Database name for mysql: ')
+        host = input('Host for mysql: [127.0.0.1] ')
         if not host:
             host = '127.0.0.1'
         config = {

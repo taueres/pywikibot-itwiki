@@ -7,8 +7,8 @@ DEBUG_MODE = False
 
 def savePage(page, text, summary):
   if DEBUG_MODE:
-    print u'******* Scrittura su pagina: "'.encode('utf-8') + page.title().encode('utf-8') + u'" ('.encode('utf-8') + summary.encode('utf-8') + u'):'.encode('utf-8')
-    print text.encode('utf-8')
+    print('******* Scrittura su pagina: "' + page.title() + '" (' + summary + '):')
+    print(text)
   else:
     page.put(text, summary)
 
@@ -17,19 +17,19 @@ def savePage(page, text, summary):
 CODICI_LINGUE = {
  "en": "English (''inglese'')",
  "de": "Deutsch (''tedesco'')",
- "fr": u"Français (''francese'')",
+ "fr": "Français (''francese'')",
  "pl": "Polski (''polacco'')",
  "it": "'''Italiano'''",
- "ja": u"日本語 (''giapponese'')",
- "es": u"Español (''spagnolo'')",
- "pt": u"Português (''portoghese'')",
+ "ja": "日本語 (''giapponese'')",
+ "es": "Español (''spagnolo'')",
+ "pt": "Português (''portoghese'')",
  "nl": "Nederlands (''olandese'')",
- "ru": u"Русский (''russo'')",
+ "ru": "Русский (''russo'')",
  "sv": "Svenska (''svedese'')",
- "zh": u"中文 (''cinese'')",
- "war": u"Winaray (''waray'')",
- "vi": u"Tiếng Việt (''vietnamita'')",
- "ceb": u"Binisaya (''cebuano'')"
+ "zh": "中文 (''cinese'')",
+ "war": "Winaray (''waray'')",
+ "vi": "Tiếng Việt (''vietnamita'')",
+ "ceb": "Binisaya (''cebuano'')"
 }
 
 TEMPLATE_BOT = "Utente:TauerBot/tmp"
@@ -40,7 +40,7 @@ TESTO_DINAMICO = [
 ["A","Aiutare per mese","Aiutare"],
 ["C","Controllare per mese","Controllare"],
 ["Controlcopy","Controllare copyright per mese","Controllare copyright"],
-["E",u"Verificare enciclopedicità per mese",u"Enciclopedicità"],
+["E","Verificare enciclopedicità per mese","Enciclopedicità"],
 ["F","Senza fonti per mese","Fonti"],
 ["NN","Contestualizzare fonti per mese","Fonti non contestualizzate"],
 ["L","Localismo per mese","Localismo"],
