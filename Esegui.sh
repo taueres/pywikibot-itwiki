@@ -16,7 +16,7 @@ case "$1" in
 		exit_status=$?
 		;;
 	"portale")
-		python $CUSTOM_SCRIPTS_DIR/Portale.py &> $TEMP_LOG_FILE
+		python $CUSTOM_SCRIPTS_DIR/Portale.py ${2} &> $TEMP_LOG_FILE
 		exit_status=$?
 		;;
 	*)

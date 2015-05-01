@@ -147,6 +147,13 @@ if os.path.exists( savedContinueFileName ) :
 else :
 	continueStr = ''
 
+# Override page limit if necessary (first parameter of the script)
+try:
+    LIMIT_TEMPLATE_CHECK = int(sys.argv[1])
+except IndexError:
+    # no change is needed
+    pass
+
 continueFetching = True
 #### STARTING MAIN LOOP
 while( continueFetching and examinedPages < LIMIT_TEMPLATE_CHECK ):
