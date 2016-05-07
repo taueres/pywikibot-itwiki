@@ -9,15 +9,15 @@ fi
 TEMP_LOG_FILE="/tmp/${1}ExecutionLog.log"
 case "$1" in
     "lingue")
-        ${CURRENT_SCRIPT_DIR}/EseguiLingue.sh &> ${TEMP_LOG_FILE}
+        ${CURRENT_SCRIPT_DIR}/src/EseguiLingue.sh &> ${TEMP_LOG_FILE}
         exit_status=$?
         ;;
     "categorie")
-        python ${CURRENT_SCRIPT_DIR}/CategorieMensili.py &> ${TEMP_LOG_FILE}
+        python ${CURRENT_SCRIPT_DIR}/src/CategorieMensili.py &> ${TEMP_LOG_FILE}
         exit_status=$?
         ;;
     "portale")
-        python ${CURRENT_SCRIPT_DIR}/Portale.py ${2} &> ${TEMP_LOG_FILE}
+        python ${CURRENT_SCRIPT_DIR}/src/Portale.py ${2} &> ${TEMP_LOG_FILE}
         exit_status=$?
         ;;
     *)
@@ -25,4 +25,4 @@ case "$1" in
         exit 2
         ;;
 esac
-python ${CURRENT_SCRIPT_DIR}/registerLog.py $1 ${exit_status} ${TEMP_LOG_FILE}
+python ${CURRENT_SCRIPT_DIR}/src/registerLog.py $1 ${exit_status} ${TEMP_LOG_FILE}

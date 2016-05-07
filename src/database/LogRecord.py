@@ -17,12 +17,12 @@ class LogRecord(object):
         self._exit_code = exit_code
 
     def set_log_text_from_file(self, file_name):
-        f = open(file_name, 'r')
-        self._log_text = f.read()
-        f.close()
+        with open(file_name, 'r') as f:
+            self._log_text = f.read()
 
     def save(self):
-        cursor = self._get_connection().cursor()
+        connection = self._get_connection()
+        cursor = connection.cursor()
         sql_log = """
             INSERT INTO log
             (command, exit_code, created_at)
@@ -36,14 +36,15 @@ class LogRecord(object):
             VALUES (%s, %s)
         """
         cursor.execute(sql_log_text, [id_log, self._log_text])
-        self._get_connection().commit()
+        connection.commit()
         cursor.close()
-        self._get_connection().close()
+        connection.close()
 
     def _get_connection(self):
         if not self._connection:
             connection_config = self._get_connection_config()
             self._connection = mysql.connector.connect(**connection_config)
+
         return self._connection
 
     def _get_connection_config(self):
@@ -51,8 +52,5 @@ class LogRecord(object):
         if not config_file:
             raise EnvironmentError('Database config file env var is missing!')
 
-        try:
-            with open(config_file) as f:
-                return json.load(f)
-        except FileNotFoundError:
-            return None
+        with open(config_file, 'r') as f:
+            return json.load(f)
