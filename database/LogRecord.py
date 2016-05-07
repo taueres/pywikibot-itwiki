@@ -1,6 +1,7 @@
 import mysql.connector
 import datetime
-from . import DbSettings
+import os
+import json
 
 class LogRecord(object):
     def __init__(self):
@@ -41,5 +42,17 @@ class LogRecord(object):
 
     def _get_connection(self):
         if not self._connection:
-            self._connection = mysql.connector.connect(**DbSettings.connection_data)
+            connection_config = self._get_connection_config()
+            self._connection = mysql.connector.connect(**connection_config)
         return self._connection
+
+    def _get_connection_config(self):
+        config_file = os.environ.get('ITWIKI_PYWIKIBOT_DATABASE_CONFIG_FILE', None)
+        if not config_file:
+            raise EnvironmentError('Database config file env var is missing!')
+
+        try:
+            with open(config_file) as f:
+                return json.load(f)
+        except FileNotFoundError:
+            return None

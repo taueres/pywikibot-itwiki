@@ -135,9 +135,9 @@ def saveErrorLog( errorPages, wikiPageTitle ):
 ############### STARTING POINT FOR THE SCRIPT ################
 print("---- Esecuzione del " + time.strftime("%c") + " ----")
 
-savedContinueFileName = os.environ['SAVED_CONTINUE_FILE']
+savedContinueFileName = os.environ['ITWIKI_PYWIKIBOT_CONTINUE_TOKEN_FILE']
 if not savedContinueFileName :
-	print("Environment variable SAVED_CONTINUE_FILE not set. Quitting.")
+	print("Environment variable ITWIKI_PYWIKIBOT_CONTINUE_TOKEN_FILE not set. Quitting.")
 	sys.exit( 1 )
 
 # Load 'continue string' if it is saved

@@ -1,9 +1,6 @@
-# -*- coding: utf-8 -*-
+import os
 
-## COMUNE A TUTTI GLI SCRIPT
-
-#DEBUG_MODE = True
-DEBUG_MODE = False
+DEBUG_MODE = bool(os.environ.get('ITWIKI_PYWIKIBOT_DEBUG', False))
 
 def savePage(page, text, summary):
   if DEBUG_MODE:

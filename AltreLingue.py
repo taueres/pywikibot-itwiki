@@ -21,8 +21,8 @@ REGEX = r"\| ?\[\[:([a-z]+):(?:.|\n)*?'''([0-9,]+)'''"
 wikiSite = pywikibot.Site()
 template = pywikibot.Page(wikiSite, TEMPLATE_BOT)
 actualRevision = template.latestRevision()
-if os.path.exists(os.environ['REVISION_FILE']):
-    revFile = open(os.environ['REVISION_FILE'], 'r')
+if os.path.exists(os.environ['ITWIKI_PYWIKIBOT_REVISION_FILE']):
+    revFile = open(os.environ['ITWIKI_PYWIKIBOT_REVISION_FILE'], 'r')
     revStored = revFile.readline()
     if revStored != str(actualRevision):
         email_text="""From: $SERVER_NAME <$SERVER_EMAIL>
@@ -35,10 +35,10 @@ Please check whether the edit is okay and delete SavedRevisionNumber file."""
         os.system( "echo -e \"" + email_text + "\" | sendmail $ADMIN_EMAIL" )
         sys.exit( 1 )
 else:
-    revFile = open(os.environ['REVISION_FILE'], 'w')
+    revFile = open(os.environ['ITWIKI_PYWIKIBOT_REVISION_FILE'], 'w')
     revFile.write(str(actualRevision))
 
-document = open(os.environ['DATI_LINGUE_FILE'], 'r')
+document = open(os.environ['ITWIKI_PYWIKIBOT_LANGUAGE_FILE'], 'r')
 text = document.read()
 matches = re.findall(REGEX, text)
 output = "{{subst:" + TEMPLATE_BOT + "|"
