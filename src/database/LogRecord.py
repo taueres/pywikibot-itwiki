@@ -48,7 +48,7 @@ class LogRecord(object):
         return self._connection
 
     def _get_connection_config(self):
-        config_file = os.environ.get('ITWIKI_PYWIKIBOT_DATABASE_CONFIG_FILE', None)
+        config_file = os.environ.get('TAUERBOT_DATABASE_CONFIG_FILE', None)
         if not config_file:
             raise EnvironmentError('Database config file env var is missing!')
 

@@ -35,15 +35,15 @@ class EnvironmentConfigurator(object):
         content += _single_stmt_configuration('PYWIKIBOT2_DIR', self._pywikibot_dir)
         content += _single_stmt_configuration('CUSTOM_SCRIPTS_DIR', self._custom_script_dir)
         content += _single_stmt_configuration(
-            'ITWIKI_PYWIKIBOT_LANGUAGE_FILE',
+            'TAUERBOT_LANGUAGE_FILE',
             os.path.join(self._temp_directory, 'lingue')
         )
         content += _single_stmt_configuration(
-            'ITWIKI_PYWIKIBOT_REVISION_FILE',
+            'TAUERBOT_REVISION_FILE',
             os.path.join(self._temp_directory, 'revision')
         )
         content += _single_stmt_configuration(
-            'ITWIKI_PYWIKIBOT_CONTINUE_TOKEN_FILE',
+            'TAUERBOT_CONTINUE_TOKEN_FILE',
             os.path.join(self._temp_directory, 'continue')
         )
         return content
