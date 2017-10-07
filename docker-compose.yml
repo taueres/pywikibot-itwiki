@@ -8,10 +8,10 @@ services:
             - ../pywikibot-itwiki-config:/root/data
             - ../pywikibot-itwiki-config:/root/config-custom
         environment:
-            - TAUERBOT_DEBUG=1
-            - TAUERBOT_LANGUAGE_FILE=/root/data/language-data
-            - TAUERBOT_REVISION_FILE=/root/data/revision
-            - TAUERBOT_CONTINUE_TOKEN_FILE=/root/data/continue-token
-            - TAUERBOT_DATABASE_CONFIG_FILE=/root/data/database-config.json
+            - ITWIKI_PYWIKIBOT_DEBUG=1
+            - ITWIKI_PYWIKIBOT_LANGUAGE_FILE=/root/data/language-data
+            - ITWIKI_PYWIKIBOT_REVISION_FILE=/root/data/revision
+            - ITWIKI_PYWIKIBOT_CONTINUE_TOKEN_FILE=/root/data/continue-token
+            - ITWIKI_PYWIKIBOT_DATABASE_CONFIG_FILE=/root/data/database-config.json
             - PYWIKIBOT2_DIR=/root/config-pywikibot
             - PYTHONPATH=/root/pywikibot

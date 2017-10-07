@@ -1,7 +1,7 @@
-# TauerBot
-This is a small application for automated maintenance tasks on Italian Wikipedia.
+# pywikibot-itwiki
+Script eseguiti da TauerBot per varie attività di manutenzione su Wikipedia in italiano.
 
-## Features
-* Updating the language counters in the section "Nelle altre lingue" of the main page;
-* Automatic creation of several monthly categories;
-* Fix common mistakes made by users with the "Portale" template.
+## Lista delle funzionalità
+* Aggiornamento dei contatori presenti nella sezione "Nelle altre lingue" della pagina principale di Wikipedia in italiano;
+* Creazione automatica delle molteplici categorie di servizio mensili;
+* Sistemazione di errori comuni sull'utilizzo del template "Portale".
