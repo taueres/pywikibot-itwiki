@@ -1,7 +1,7 @@
 version: '2'
 services:
     it-pywikibot:
-        build: .
+        image: taueres/pywikibot-itwiki:1.0
         volumes:
             - .:/root/it-pywikibot
             - ../pywikibot-itwiki-config:/root/config-pywikibot
@@ -12,6 +12,6 @@ services:
             - ITWIKI_PYWIKIBOT_LANGUAGE_FILE=/root/data/language-data
             - ITWIKI_PYWIKIBOT_REVISION_FILE=/root/data/revision
             - ITWIKI_PYWIKIBOT_CONTINUE_TOKEN_FILE=/root/data/continue-token
-            - ITWIKI_PYWIKIBOT_DATABASE_CONFIG_FILE=/root/data/database-config.json
+            - ITWIKI_PYWIKIBOT_DATABASE_CONFIG_FILE=/root/config-custom/database-config.json
             - PYWIKIBOT2_DIR=/root/config-pywikibot
             - PYTHONPATH=/root/pywikibot

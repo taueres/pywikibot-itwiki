@@ -6,6 +6,9 @@ RUN apk update
 RUN apk add bash
 RUN apk add python3
 RUN apk add git
+RUN apk add wget
+RUN apk add ca-certificates
+RUN update-ca-certificates
 
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
